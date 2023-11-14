@@ -10,39 +10,99 @@ body {
 
 .carosello-container {
     position: relative;
-    width: 800px;
+    width: 1000px;
     display: flex;
+    flex-direction: row; 
     align-items: center;
     justify-content: center;
-    flex-direction: column;
 }
 
 .carosello {
-    width: 100%;
+    width: 800px;
     height: 400px;
     overflow: hidden;
     position: relative;
 }
 
 .carosello-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    width: 800px;
+    height: 400px;
+    object-fit: fill;
     display: none;
+    position: relative;
 }
 
 .carosello-image.active {
     display: block;
 }
 
-.frecce {
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-}
 
-.frecce .freccia {
+
+.anteprime .freccia {
     font-size: 24px;
     cursor: pointer;
-    margin: 0 10px;
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    z-index: 1;
+    border-radius: 50%;
 }
+
+.anteprime .freccia.prev {
+    top: 10px; 
+    background-color: white;
+}
+
+.anteprime .freccia.next {
+    bottom: 10px; 
+    background-color: white;
+}
+
+.anteprime .freccia i {
+    font-size: 24px;
+    color: rgb(10, 9, 9);
+
+}
+
+.anteprima-image:hover {
+    opacity: 1; 
+}
+
+.carosello-image.active .image-text {
+    display: block;
+}
+
+.image-text {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    display: none;
+}
+
+
+.thumbnails {
+    display: flex;
+    justify-content: center;
+    flex-direction: column; 
+    align-items: center; 
+
+}
+
+.anteprima-image {
+    width: 150px;
+    height: 80px;
+    object-fit: fill;
+    cursor: pointer;
+
+}
+
+.anteprima-image:hover {
+    opacity: 1; 
+}
+

@@ -23,15 +23,56 @@ const images = [
 ];
 
 const carosello = document.querySelector(".carosello");
+const anteprimeContainer = document.querySelector(".anteprime");
+const thumbnailsContainer = document.querySelector(".thumbnails");
+const frecce = document.querySelectorAll(".freccia");
 
 let immagineAttuale = 0;
+let autoplayInterval;
 
-function cambiaImmagine(direction) {
-    immagineAttuale = (immagineAttuale + direction + images.length) % images.length;
+function cambiaImmagine(index) {
     document.querySelector(".carosello-image.active").classList.remove("active");
-    document.querySelectorAll(".carosello-image")[immagineAttuale].classList.add("active");
+    document.querySelectorAll(".carosello-image")[index].classList.add("active");
+    immagineAttuale = index;
 }
 
+function creaThumbnail(index) {
+    const anteprima = document.createElement("img");
+    anteprima.src = images[index].image;
+    anteprima.classList.add("anteprima-image");
+    anteprima.dataset.index = index;
+    anteprima.addEventListener("click", () => {
+        const index = anteprima.dataset.index;
+        cambiaImmagine(index);
+    });
+    thumbnailsContainer.appendChild(anteprima);
+}
+
+function attivaAutoplay() {
+    autoplayInterval = setInterval(() => {
+        immagineAttuale = (immagineAttuale + 1) % images.length;
+        cambiaImmagine(immagineAttuale);
+    }, 3000);
+}
+
+function disattivaAutoplay() {
+    clearInterval(autoplayInterval);
+}
+
+frecce.forEach(freccia => {
+    freccia.addEventListener("click", () => {
+        disattivaAutoplay();
+        if (freccia.classList.contains("prev")) {
+            immagineAttuale = (immagineAttuale - 1 + images.length) % images.length;
+        } else if (freccia.classList.contains("next")) {
+            immagineAttuale = (immagineAttuale + 1) % images.length;
+        }
+        cambiaImmagine(immagineAttuale);
+    });
+});
+
+carosello.addEventListener("mouseenter", disattivaAutoplay);
+carosello.addEventListener("mouseleave", attivaAutoplay);
 
 for (let i = 0; i < images.length; i++) {
     const immagine = document.createElement("img");
@@ -41,4 +82,9 @@ for (let i = 0; i < images.length; i++) {
         immagine.classList.add("active");
     }
     carosello.appendChild(immagine);
+
+    creaThumbnail(i);
 }
+
+
+attivaAutoplay();
